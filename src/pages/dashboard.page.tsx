@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const DashboarPage: React.FC = () => {
+export const DashboardPage: React.FC = () => {
   const classes = useStyles();
 
   const chartProdutionData: chartDataItem[] = produtionData.data.map( (data, index)=> {

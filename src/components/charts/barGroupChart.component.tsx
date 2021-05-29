@@ -26,7 +26,7 @@ export const BarGroupChartComponente: React.FC<{data: chartDataItem[]}> = (props
       stroke: { show: true, width: [0, 0, 3] },
       plotOptions: {bar: { columnWidth: '40' }},
       xaxis: {
-        categories: props.data.keys()
+        categories: props.data.map(data => data.name)
       },
       yaxis: [
           {
@@ -58,7 +58,7 @@ export const BarGroupChartComponente: React.FC<{data: chartDataItem[]}> = (props
         ],
       
     })
-  }, [])
+  }, [props.data])
 
   const  series = [
     {

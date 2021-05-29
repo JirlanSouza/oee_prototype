@@ -12,6 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -62,6 +63,22 @@ const useStyles = makeStyles((theme: Theme) =>
 const DrawerComponent: React.FC<{ drawerOpen: boolean, drawerClose: () => void }> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory();
+
+  const menuItens = [
+    {
+      name: 'Dashboard',
+      path: ''
+    },
+    {
+      name: 'Produção',
+      path: 'production'
+    },
+    {
+      name: 'Configuração',
+      path: 'configuration'
+    },
+  ]
 
   const handleDrawerClose = () => {
     props.drawerClose();
@@ -87,10 +104,10 @@ const DrawerComponent: React.FC<{ drawerOpen: boolean, drawerClose: () => void }
         </div>
         <Divider />
         <List>
-          {['Dashboard', 'Produção', 'Configuração'].map((text, index) => (
-            <ListItem button key={text}>
+          {menuItens.map((item, index) => (
+            <ListItem button key={item.name} onClick={() => { history.push(item.path) }}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={item.name} />
             </ListItem>
           ))}
         </List>

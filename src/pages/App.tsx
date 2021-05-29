@@ -1,30 +1,30 @@
 import React from 'react';
-import { createStyles, makeStyles, useTheme, Theme, ThemeProvider } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AppBarComponent from '../components/layout/AppBar.component';
 import DrawerComponent from '../components/layout/Drawer.component';
-import { DashboarPage } from './dashboard.page';
 import { theme } from '../theme/theme';
-
-const drawerWidth = 240;
+import { Routes } from '../routes/routes';
+import { AuthProvider } from '../contexts/auth';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      Height: '100%'
     },
-    
+
     content: {
-      flexGrow: 1,
       marginTop: 64,
       padding: theme.spacing(3),
-      overflow: 'auto'
+      overflow: 'auto',
+      Height: '700px'
     },
   }),
 );
 
- function App() {
+function App() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -36,16 +36,25 @@ const useStyles = makeStyles((theme: Theme) =>
     setOpen(false);
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppBarComponent drawerOpen={handleDrawerOpen} isDrawerOpen={open} drawerWidth={300} />
-      <DrawerComponent drawerOpen={open} drawerClose={handleDrawerClose} />
-      
+  const ContentWrapper: React.FC = (props) => {
+    return (
       <main className={classes.content}>
-        <DashboarPage />
+        {props.children}
       </main>
-    </ThemeProvider>
+    )
+  }
+
+  return (
+
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes contentWrapper={ContentWrapper}>
+          <AppBarComponent drawerOpen={handleDrawerOpen} isDrawerOpen={open} drawerWidth={300} />
+          <DrawerComponent drawerOpen={open} drawerClose={handleDrawerClose} />
+        </Routes>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
